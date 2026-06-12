@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To My Fucking Gorgeous Boy</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Playfair Display for headers, Inter for UI -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;1,400;1,700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float-slow': 'float 6s ease-in-out infinite',
+            'spin-slow': 'spin 12s linear infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-15px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #110c12;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #f43f5e;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #e11d48;
+    }
+
+    /* Custom Envelope styles */
+    .envelope-wrapper {
+      perspective: 1000px;
+    }
+    .envelope {
+      position: relative;
+      background: #f43f5e;
+      transition: transform 0.5s ease;
+      transform-style: preserve-3d;
+    }
+    .envelope.open {
+      transform: rotateX(-20deg);
+    }
+    .letter {
+      transition: transform 0.6s ease, z-index 0s 0.2s;
+    }
+    .envelope.open .letter {
+      transform: translateY(-80px);
+      z-index: 20;
+    }
+    
+    /* Neon Glows */
+    .glow-rose {
+      box-shadow: 0 0 25px rgba(244, 63, 94, 0.4);
+    }
+    .glow-purple {
+      box-shadow: 0 0 25px rgba(168, 85, 247, 0.4);
+    }
+  </style>
+</head>
+<body class="bg-[#0b050c] text-slate-100 font-sans overflow-x-hidden min-h-screen relative">
+
+  <!-- Interactive Canvas Background for Heart Shower -->
+  <canvas id="heartCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-40"></canvas>
+
+  <!-- Interactive Sparkler Canvas (Captures pointer moves) -->
+  <canvas id="sparkleCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-10"></canvas>
+
+  <!-- Floating Audio Notification -->
+  <div id="audioStatus" class="fixed top-4 right-4 bg-black/80 backdrop-blur-md border border-rose-500/30 px-4 py-2 rounded-full text-xs text-rose-300 z-50 flex items-center gap-2 transform translate-y-[-100px] opacity-0 transition-all duration-500">
+    <i class="fa-solid fa-volume-high animate-bounce"></i>
+    <span id="audioStatusText">Chime Enabled</span>
+  </div>
+
+  <!-- Hero & Main Workspace Container -->
+  <div class="relative z-20 max-w-6xl mx-auto px-4 py-8 flex flex-col min-h-screen justify-between">
+    
+    <!-- Top Nav / Header -->
+    <header class="flex justify-between items-center border-b border-rose-500/10 pb-6 mb-10">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-gradient-to-br from-rose-500 to-purple-600 rounded-full flex items-center justify-center animate-pulse-slow">
+          <i class="fa-solid fa-heart-pulse text-white"></i>
+        </div>
+        <div>
+          <span class="font-bold tracking-wider uppercase text-xs bg-gradient-to-r from-rose-400 to-purple-400 bg-clip-text text-transparent">Dedicated to My Absolute Favorite</span>
+          <h1 class="text-lg font-bold text-white leading-none">Sexy Grumpy Boy</h1>
+        </div>
+      </div>
+      <button onclick="toggleMusic()" class="px-4 py-2 bg-rose-950/40 hover:bg-rose-900/50 border border-rose-500/30 hover:border-rose-400 rounded-full text-xs font-semibold tracking-wide text-rose-300 transition-all duration-300 flex items-center gap-2">
+        <i id="musicIcon" class="fa-solid fa-music"></i> Sound FX Active
+      </button>
+    </header>
+
+    <!-- Main Content Layout -->
+    <main class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center flex-grow mb-12">
+      
+      <!-- Left Column: Bold Titles, Interactive Love Copy & Compliment Generator -->
+      <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
+        <div class="space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 bg-rose-500/10 border border-rose-500/20 rounded-full text-rose-400 text-xs font-semibold animate-pulse">
+            <span class="w-2 h-2 rounded-full bg-rose-500"></span> Fucking obsessed with you
+          </div>
+          <h2 class="text-4xl md:text-6xl font-serif font-bold text-white leading-tight">
+            The Sexiest <br class="hidden md:inline">
+            <span class="bg-gradient-to-r from-rose-400 via-pink-500 to-purple-400 bg-clip-text text-transparent">Grumpiest Man</span> <br>
+            On Earth.
+          </h2>
+          <p class="text-slate-300 max-w-lg mx-auto lg:mx-0 text-base leading-relaxed">
+            I swear to God, even when you're making that intense, angry, gorgeous face, you have my entire heart. You are a absolute masterpiece of a man. Below, drop your photo into the frame, write your heart out, and tap to see what makes you so goddamn perfect.
+          </p>
+        </div>
+
+        <!-- Call to Action / Interactive Compliment Generator -->
+        <div class="bg-purple-950/20 backdrop-blur-md border border-purple-500/20 p-6 rounded-2xl glow-purple max-w-lg mx-auto lg:mx-0 transition-transform hover:scale-[1.01] duration-300">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 border border-purple-500/20">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+            <h3 class="font-bold text-white text-sm tracking-wide">Why You Are So Fucking Perfect:</h3>
+          </div>
+          
+          <div class="min-h-[80px] flex items-center justify-center bg-black/40 border border-purple-900/30 p-4 rounded-xl mb-4">
+            <p id="complimentText" class="text-rose-200 text-sm italic font-serif text-center">
+              "Click the magic button below to unlock a highly affectionate, cheeky reminder of your power over me."
+            </p>
+          </div>
+
+          <button onclick="generateCompliment()" class="w-full py-3 bg-gradient-to-r from-rose-500 to-purple-600 hover:from-rose-400 hover:to-purple-500 text-white font-semibold text-xs tracking-widest uppercase rounded-xl transition-all shadow-lg hover:shadow-rose-500/20 flex items-center justify-center gap-2">
+            <span>Remind Me Why I Love You</span> <i class="fa-solid fa-fire"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Column: Interactive Photo Holder & Custom Uploader -->
+      <div class="lg:col-span-5 flex flex-col items-center">
+        
+        <!-- Animated Photo Frame -->
+        <div class="relative group w-72 h-72 md:w-80 md:h-80 flex items-center justify-center mb-6">
+          <!-- Animated rotating outer neon rings -->
+          <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-rose-500 via-pink-500 to-purple-600 animate-spin-slow opacity-75 blur-md"></div>
+          <div class="absolute -inset-1 rounded-full bg-gradient-to-tr from-purple-600 via-rose-500 to-pink-500 animate-spin opacity-50"></div>
+          
+          <!-- Inner Picture frame container -->
+          <div class="relative w-[calc(100%-12px)] h-[calc(100%-12px)] rounded-full bg-[#110515] overflow-hidden border-4 border-black flex flex-col items-center justify-center z-10">
+            <!-- Uploaded Image -->
+            <img id="boyPhoto" src="" alt="My Lovely Boy" class="hidden w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+            
+            <!-- Beautiful Initial Placeholder -->
+            <div id="photoPlaceholder" class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-gradient-to-b from-purple-950/40 to-black/80">
+              <div class="w-16 h-16 rounded-full bg-rose-500/10 border border-rose-500/30 flex items-center justify-center mb-3 animate-bounce">
+                <i class="fa-solid fa-camera-retro text-rose-400 text-2xl"></i>
+              </div>
+              <h4 class="text-sm font-bold text-white mb-1">Upload His Fine Ass</h4>
+              <p class="text-xs text-rose-200/70 max-w-[200px] leading-relaxed">
+                Drag & Drop <b class="text-rose-400">image_95a243.jpg</b> here, or click to select!
+              </p>
+            </div>
+            
+            <!-- Hidden Input for file selection -->
+            <input type="file" id="fileInput" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer z-30" onchange="loadBoyPhoto(event)">
+          </div>
+
+          <!-- Bottom Floating Badge -->
+          <div class="absolute -bottom-3 bg-gradient-to-r from-rose-500 to-purple-600 border border-rose-400 px-4 py-1.5 rounded-full text-[10px] font-bold tracking-widest uppercase text-white shadow-lg z-20">
+            My Forever Boy
+          </div>
+        </div>
+
+        <!-- Love-O-Meter Game -->
+        <div class="w-full max-w-sm bg-rose-950/20 border border-rose-500/20 rounded-2xl p-4 text-center backdrop-blur-md">
+          <div class="flex justify-between items-center text-xs text-rose-300 font-semibold mb-2 px-1">
+            <span>Obsession Meter</span>
+            <span id="lovePoints">9999%</span>
+          </div>
+          <div class="w-full bg-black/50 h-3 rounded-full overflow-hidden border border-rose-950 mb-4">
+            <div id="loveBar" class="bg-gradient-to-r from-rose-500 via-pink-500 to-purple-500 h-full w-[85%] transition-all duration-300 shadow-inner"></div>
+          </div>
+          <button onclick="boostLove()" class="px-5 py-2.5 bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/40 hover:border-rose-400 rounded-full text-xs font-semibold text-rose-300 transition-all duration-300 flex items-center justify-center gap-2 mx-auto scale-95 hover:scale-100">
+            <i class="fa-solid fa-heart animate-pulse text-rose-500"></i> Tap to Pump Up the Passion
+          </button>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Sub-Workspace: Interactive Letter Builder & Fun Counters -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t border-rose-500/10 mb-10 relative z-30">
+      
+      <!-- Interactive 3D Love Envelope & Message Box -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-envelope-open-text text-rose-500 text-lg"></i>
+          <h3 class="font-serif font-bold text-xl text-white">Interactive Love Letter</h3>
+        </div>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          Write a secret, passionate note to your boy below, then seal the letter. Once sealed, you can trigger a digital animation to display your message dynamically!
+        </p>
+
+        <!-- Message Editor -->
+        <div class="space-y-3">
+          <textarea id="loveMessageInput" rows="3" class="w-full bg-black/40 border border-rose-950 focus:border-rose-500 focus:ring-1 focus:ring-rose-500 rounded-xl p-3 text-xs text-rose-100 placeholder-rose-900/60 transition-colors resize-none" placeholder="Write something adorable, sassy, or spicy here..."></textarea>
+          
+          <div class="flex gap-2">
+            <button onclick="sealLetter()" class="flex-1 py-2 bg-rose-600 hover:bg-rose-500 text-white font-bold text-[11px] tracking-wider uppercase rounded-lg transition-colors flex items-center justify-center gap-1.5 shadow-md shadow-rose-950/50">
+              <i class="fa-solid fa-stamp"></i> Seal & Send
+            </button>
+            <button onclick="resetLetter()" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-slate-200 font-semibold text-[11px] uppercase rounded-lg transition-colors">
+              Reset
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Envelope Visual Representation -->
+      <div class="flex items-center justify-center">
+        <div class="envelope-wrapper relative w-full max-w-[280px] h-[180px]">
+          <div id="envelopeObj" class="envelope w-full h-full rounded-lg shadow-2xl flex items-center justify-center text-center p-4 border border-rose-400/40">
+            <!-- Card / Letter hidden inside or showing -->
+            <div id="letterObj" class="letter absolute inset-2 bg-[#fdfaf7] text-slate-800 rounded shadow-md p-3 flex flex-col justify-between text-left select-none overflow-hidden transform translate-y-0 z-0">
+              <div class="text-[10px] font-bold text-rose-600 uppercase tracking-wider border-b border-rose-100 pb-1 flex justify-between items-center">
+                <span>Personal & Private</span>
+                <i class="fa-solid fa-heart"></i>
+              </div>
+              <p id="letterContent" class="text-[11px] italic font-serif leading-relaxed text-slate-700 overflow-y-auto pr-1 my-1">
+                "Write your message on the left and hit Seal to load it here! You're going to make him grin so fucking hard."
+              </p>
+              <span class="text-[9px] text-slate-400 text-right font-semibold">Forever Yours, Me x</span>
+            </div>
+
+            <!-- Envelope Back Flap Overlay when sealed -->
+            <div id="envelopeSealedMask" class="absolute inset-0 bg-gradient-to-b from-rose-500 to-rose-700 rounded-lg flex flex-col items-center justify-center transition-all duration-300 opacity-0 pointer-events-none z-10 border-2 border-rose-400">
+              <div class="w-12 h-12 rounded-full bg-[#110515] border-2 border-amber-400 flex items-center justify-center text-amber-400 text-lg shadow-inner animate-pulse">
+                <i class="fa-solid fa-heart"></i>
+              </div>
+              <span class="text-[10px] font-bold tracking-widest uppercase text-rose-200 mt-2">Locked With Love</span>
+              <button onclick="openLetter()" class="mt-3 px-3 py-1 bg-black/60 hover:bg-black/80 border border-rose-500/50 rounded-full text-[9px] font-semibold text-rose-300 uppercase tracking-widest transition-all">
+                Open Letter
+              </button>
+            </div>
+            
+            <div id="envelopeFrontState" class="absolute bottom-2 text-center text-rose-100 font-bold text-[10px] tracking-widest uppercase flex flex-col items-center">
+              <i class="fa-solid fa-heart-circle-check text-xl mb-1 text-white animate-bounce"></i>
+              Open Letter Envelope
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Custom Info Modals / Alerts to replace browser 'alert()' -->
+    <div id="toastNotification" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-black/95 border border-rose-500/50 text-rose-200 text-xs py-3 px-6 rounded-full shadow-2xl z-50 flex items-center gap-2 pointer-events-none transition-all duration-500 opacity-0 translate-y-[20px]">
+      <i id="toastIcon" class="fa-solid fa-bell text-rose-400"></i>
+      <span id="toastMsg">Notification content here</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-rose-500/10 pt-6 flex flex-col sm:flex-row justify-between items-center text-[10px] text-slate-500 gap-4">
+      <div>
+        Created with maximum love, style, and slightly dirty thoughts.
+      </div>
+      <div class="flex gap-4">
+        <a href="#" class="hover:text-rose-400 transition-colors">Privacy</a>
+        <span>&bull;</span>
+        <a href="#" class="hover:text-rose-400 transition-colors">Infinite Obsession</a>
+        <span>&bull;</span>
+        <a href="#" class="hover:text-rose-400 transition-colors">My Man Always</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    /* Sound System using Web Audio API (Highly compliant and premium) */
+    let audioCtx = null;
+    let musicActive = true;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function playChime(freq = 587.33, duration = 0.5, type = 'sine') {
+      if (!musicActive) return;
+      try {
+        initAudio();
+        const osc = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        
+        gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+        
+        osc.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (err) {
+        console.log("Audio contextual restrictions applied");
+      }
+    }
+
+    function toggleMusic() {
+      musicActive = !musicActive;
+      const btn = document.getElementById('musicIcon');
+      if (musicActive) {
+        btn.className = "fa-solid fa-music text-rose-400";
+        showToast("Chime sound effects are now ON!", "fa-volume-high");
+        playChime(659.25, 0.4); // E5 note
+      } else {
+        btn.className = "fa-solid fa-volume-xmark text-slate-500";
+        showToast("Sound effects muted.", "fa-volume-xmark");
+      }
+    }
+
+    /* Floating Canvas Heart Background */
+    const canvas = document.getElementById('heartCanvas');
+    const ctx = canvas.getContext('2d');
+    let hearts = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Heart {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = canvas.height + Math.random() * 100;
+        this.size = Math.random() * 12 + 6;
+        this.speed = Math.random() * 1 + 0.5;
+        this.angle = Math.random() * Math.PI * 2;
+        this.angleSpeed = Math.random() * 0.02 - 0.01;
+        this.alpha = Math.random() * 0.5 + 0.1;
+        this.color = Math.random() > 0.5 ? '#f43f5e' : '#a855f7';
+      }
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.alpha;
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+        ctx.beginPath();
+        // Drawing a heart shape
+        ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(-this.size/2, -this.size/2, -this.size, this.size/3, 0, this.size);
+        ctx.bezierCurveTo(this.size, this.size/3, this.size/2, -this.size/2, 0, 0);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.restore();
+      }
+      update() {
+        this.y -= this.speed;
+        this.x += Math.sin(this.angle) * 0.3;
+        this.angle += this.angleSpeed;
+        if (this.y < -20 || this.x < -20 || this.x > canvas.width + 20) {
+          this.reset();
+        }
+      }
+    }
+
+    for (let i = 0; i < 40; i++) {
+      hearts.push(new Heart());
+    }
+
+    /* Interactive Canvas Sparkle Canvas */
+    const sparkleCanvas = document.getElementById('sparkleCanvas');
+    const sCtx = sparkleCanvas.getContext('2d');
+    let sparkles = [];
+
+    function resizeSparkleCanvas() {
+      sparkleCanvas.width = window.innerWidth;
+      sparkleCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeSparkleCanvas);
+    resizeSparkleCanvas();
+
+    class Sparkle {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.size = Math.random() * 6 + 4;
+        this.vx = Math.random() * 2 - 1;
+        this.vy = Math.random() * -3 - 1;
+        this.alpha = 1;
+        this.color = Math.random() > 0.4 ? '#f43f5e' : '#f472b6';
+      }
+      draw() {
+        sCtx.save();
+        sCtx.globalAlpha = this.alpha;
+        sCtx.translate(this.x, this.y);
+        sCtx.beginPath();
+        sCtx.moveTo(0, 0);
+        sCtx.bezierCurveTo(-this.size/2, -this.size/2, -this.size, this.size/3, 0, this.size);
+        sCtx.bezierCurveTo(this.size, this.size/3, this.size/2, -this.size/2, 0, 0);
+        sCtx.fillStyle = this.color;
+        sCtx.fill();
+        sCtx.restore();
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.alpha -= 0.02;
+      }
+    }
+
+    // Capture movement to spawn custom hearts
+    window.addEventListener('pointermove', (e) => {
+      if (Math.random() > 0.7) {
+        sparkles.push(new Sparkle(e.clientX, e.clientY));
+      }
+    });
+
+    window.addEventListener('pointerdown', (e) => {
+      // Trigger a mini explosion of hearts on click
+      for(let i=0; i<8; i++) {
+        sparkles.push(new Sparkle(e.clientX, e.clientY));
+      }
+      playChime(440 + Math.random() * 200, 0.3);
+    });
+
+    /* Central Animation Loop */
+    function animate() {
+      // Clear Heart Background
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      hearts.forEach(h => {
+        h.update();
+        h.draw();
+      });
+
+      // Clear Interactive Sparkle overlay
+      sCtx.clearRect(0, 0, sparkleCanvas.width, sparkleCanvas.height);
+      sparkles.forEach((s, index) => {
+        s.update();
+        s.draw();
+        if (s.alpha <= 0) {
+          sparkles.splice(index, 1);
+        }
+      });
+
+      requestAnimationFrame(animate);
+    }
+    
+    // Start animation loop once DOM is fully set up
+    window.onload = function() {
+      animate();
+    };
+
+    /* Custom Toast Notification System (Replaces ugly alert dialogs) */
+    let toastTimeout;
+    function showToast(message, icon = "fa-heart") {
+      const toast = document.getElementById('toastNotification');
+      const msg = document.getElementById('toastMsg');
+      const icn = document.getElementById('toastIcon');
+      
+      msg.innerText = message;
+      icn.className = `fa-solid ${icon} text-rose-400 text-base animate-bounce`;
+      
+      toast.classList.remove('opacity-0', 'translate-y-[20px]');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-[20px]');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 3000);
+    }
+
+    /* Cheeky Adult & Passionate Compliments (Customized for user preference) */
+    const compliments = [
+      "You make that angry, intense face and I literally forget how the fuck to breathe.",
+      "You are, without a single doubt, the sexiest, most magnetic man to ever exist.",
+      "I want to kiss that gorgeous, stubborn face of yours until you have no choice but to grin.",
+      "Even when you're grumpier than shit, you are absolute perfection to me.",
+      "Your jawline could cut glass, and those eyes of yours drive me fucking insane.",
+      "No one has any business looking that damn good. It's actually criminal.",
+      "You're a brilliant, captivating, gorgeous mystery and I am completely obsessed.",
+      "Your growl, your bite, your beautiful smirk... you have my whole heart wrapped around your finger.",
+      "That intense raw look you have? Absolute masterpiece. Fucking flawless.",
+      "I swear to God, there is nothing more breathtaking than when your face lights up with a real, gorgeous smile."
+    ];
+
+    function generateCompliment() {
+      const textElement = document.getElementById('complimentText');
+      
+      // Select a random compliment from the array
+      const randomIndex = Math.floor(Math.random() * compliments.length);
+      const randomCompliment = compliments[randomIndex];
+
+      // Play soft harmonic sequence
+      playChime(523.25, 0.4, 'triangle'); // C5
+      setTimeout(() => playChime(659.25, 0.4, 'triangle'), 100); // E5
+      setTimeout(() => playChime(783.99, 0.5, 'sine'), 200); // G5
+      
+      // Text change animation
+      textElement.style.opacity = 0;
+      setTimeout(() => {
+        textElement.innerText = `"${randomCompliment}"`;
+        textElement.style.opacity = 1;
+      }, 200);
+
+      showToast("Fucking love you!", "fa-fire-flame-curved");
+    }
+
+    /* Local File Uploader for image_95a243.jpg or any other photo */
+    function loadBoyPhoto(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const boyPhoto = document.getElementById('boyPhoto');
+          const placeholder = document.getElementById('photoPlaceholder');
+          
+          boyPhoto.src = e.target.result;
+          boyPhoto.classList.remove('hidden');
+          placeholder.classList.add('hidden');
+          
+          // Sound trigger for loading
+          playChime(880.00, 0.8, 'sine'); // A5 chord
+          setTimeout(() => playChime(1046.50, 0.6, 'sine'), 150); // C6 chord
+
+          showToast("He is looking damn handsome in that frame!", "fa-face-kiss-wink-heart");
+
+          // Spawn mini-explosion of hearts inside the center of the viewport
+          const cx = window.innerWidth / 2;
+          const cy = window.innerHeight / 2;
+          for(let i=0; i<25; i++) {
+            sparkles.push(new Sparkle(cx + (Math.random() * 100 - 50), cy + (Math.random() * 100 - 50)));
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    /* Love Meter Obsession Booster */
+    let meterPercentage = 85;
+    let points = 9999;
+    function boostLove() {
+      if (meterPercentage < 100) {
+        meterPercentage += 1.5;
+        if (meterPercentage > 100) meterPercentage = 100;
+        points += Math.floor(Math.random() * 150) + 100;
+        
+        document.getElementById('loveBar').style.width = `${meterPercentage}%`;
+        document.getElementById('lovePoints').innerText = `${points}% POWER`;
+        
+        // Scale pitch based on meter completion
+        const baseFreq = 440 + (meterPercentage * 3);
+        playChime(baseFreq, 0.3, 'sine');
+        
+        if (meterPercentage >= 100) {
+          showToast("MAXIMUM OBSESSION UNLOCKED! 🔥", "fa-bolt");
+          playChime(1318.51, 1.2, 'sine'); // E6 high chime
+        } else {
+          showToast("Sending more adoration...", "fa-heart-pulse");
+        }
+      } else {
+        // Already maxed, reset or loop
+        meterPercentage = 40;
+        points = 2500;
+        document.getElementById('loveBar').style.width = `${meterPercentage}%`;
+        document.getElementById('lovePoints').innerText = `${points}% POWER`;
+        showToast("Power overloaded! Let's do it again! 😘", "fa-arrows-spin");
+        playChime(220.00, 0.5, 'square');
+      }
+    }
+
+    /* Envelope and Letter Custom States */
+    function sealLetter() {
+      const msgInput = document.getElementById('loveMessageInput').value.trim();
+      const letterContent = document.getElementById('letterContent');
+      const sealedMask = document.getElementById('envelopeSealedMask');
+      const letterObj = document.getElementById('letterObj');
+      const envelopeObj = document.getElementById('envelopeObj');
+      const frontStateText = document.getElementById('envelopeFrontState');
+
+      if (!msgInput) {
+        showToast("Please write a sweet little note before sealing!", "fa-circle-exclamation");
+        playChime(220, 0.3, 'sawtooth');
+        return;
+      }
+
+      // Load custom message into letter frame
+      letterContent.innerText = `"${msgInput}"`;
+      
+      // Update CSS transformations to show envelope closure
+      envelopeObj.classList.add('open');
+      
+      setTimeout(() => {
+        // Lower card into envelope container
+        letterObj.style.transform = 'translateY(0px)';
+        letterObj.style.zIndex = '0';
+        
+        setTimeout(() => {
+          // Show beautiful outer seal mask
+          sealedMask.classList.remove('opacity-0', 'pointer-events-none');
+          sealedMask.classList.add('opacity-100', 'pointer-events-auto');
+          frontStateText.classList.add('hidden');
+          
+          playChime(392.00, 0.4, 'sine'); // G4
+          setTimeout(() => playChime(311.13, 0.6, 'sine'), 150); // Eb4
+          
+          showToast("Your letter is hot, sealed, and ready!", "fa-envelope-circle-check");
+        }, 300);
+
+      }, 400);
+    }
+
+    function openLetter() {
+      const sealedMask = document.getElementById('envelopeSealedMask');
+      const letterObj = document.getElementById('letterObj');
+      const envelopeObj = document.getElementById('envelopeObj');
+      const frontStateText = document.getElementById('envelopeFrontState');
+
+      // Hide the seal mask
+      sealedMask.classList.remove('opacity-100', 'pointer-events-auto');
+      sealedMask.classList.add('opacity-0', 'pointer-events-none');
+      frontStateText.classList.remove('hidden');
+
+      setTimeout(() => {
+        // Trigger envelope open states and lift the note out beautifully
+        envelopeObj.classList.add('open');
+        
+        setTimeout(() => {
+          letterObj.style.transform = 'translateY(-80px)';
+          letterObj.style.zIndex = '20';
+          
+          playChime(523.25, 0.4, 'sine'); // C5
+          setTimeout(() => playChime(659.25, 0.4, 'sine'), 100); // E5
+          setTimeout(() => playChime(880.00, 0.6, 'sine'), 200); // A5
+
+          showToast("Look at that gorgeous letter rise! ❤️", "fa-envelope-open");
+        }, 300);
+
+      }, 200);
+    }
+
+    function resetLetter() {
+      const letterContent = document.getElementById('letterContent');
+      const msgInput = document.getElementById('loveMessageInput');
+      const sealedMask = document.getElementById('envelopeSealedMask');
+      const letterObj = document.getElementById('letterObj');
+      const envelopeObj = document.getElementById('envelopeObj');
+      const frontStateText = document.getElementById('envelopeFrontState');
+
+      msgInput.value = '';
+      letterContent.innerText = '"Write your message on the left and hit Seal to load it here! You\'re going to make him grin so fucking hard."';
+      
+      // Reset animations to pristine defaults
+      sealedMask.classList.remove('opacity-100', 'pointer-events-auto');
+      sealedMask.classList.add('opacity-0', 'pointer-events-none');
+      frontStateText.classList.remove('hidden');
+      
+      envelopeObj.classList.remove('open');
+      letterObj.style.transform = 'translateY(0px)';
+      letterObj.style.zIndex = '0';
+
+      playChime(293.66, 0.4, 'triangle'); // D4
+      showToast("Message form reset.", "fa-arrow-rotate-left");
+    }
+  </script>
+</body>
+</html>
